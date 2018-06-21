@@ -97,9 +97,13 @@ extension LTAdvancedManager {
 extension LTAdvancedManager {
     
     //设置ScrollView的contentInset
-    private func scrollInsets(_ currentVC: UIViewController ,_ up: CGFloat) {
-        currentVC.glt_scrollView?.contentInset = UIEdgeInsetsMake(up, 0, 0, 0)
-        currentVC.glt_scrollView?.scrollIndicatorInsets = UIEdgeInsetsMake(up, 0, 0, 0)
+    private func scrollInsets(_ currentVC: UIViewController ,_ up: CGFloat) {        
+        var edge: UIEdgeInsets? = currentVC.glt_scrollView?.contentInset;
+        edge?.top = up;
+        if let edge = edge {
+            currentVC.glt_scrollView?.contentInset = edge  
+            currentVC.glt_scrollView?.scrollIndicatorInsets = edge
+        }
     }
     
     //MARK: 首次创建pageView的ChildVC回调
