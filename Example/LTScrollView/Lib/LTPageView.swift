@@ -27,7 +27,9 @@ public class LTLayout: NSObject {
     
     /* 标题字号 */
     @objc public var titleFont: UIFont? = UIFont.systemFont(ofSize: 16)
-    
+    /* 标题选中字号 */
+    @objc public var titleSelectFont: UIFont? = UIFont.systemFont(ofSize: 16)
+
     /* 滑块底部线的颜色 */
     @objc public var bottomLineColor: UIColor? = UIColor.blue
     
@@ -48,6 +50,9 @@ public class LTLayout: NSObject {
     
     /* 滑块底部线圆角 */
     @objc public var bottomLineCornerRadius: CGFloat = 0.0
+    
+    /* 滑块底部线离底部距离 */
+    @objc public var bottomLineBottomMargin: CGFloat = 0.0
     
     /* 是否隐藏滑块 */
     @objc public var isHiddenSlider: Bool = false
@@ -132,7 +137,7 @@ public class LTPageView: UIView {
     }()
     
     private lazy var sliderLineView: UIView = {
-        let sliderLineView = UIView(frame: CGRect(x: self.layout.lrMargin, y: self.pageTitleView.bounds.height - layout.bottomLineHeight - layout.pageBottomLineHeight, width: 0, height: self.layout.bottomLineHeight))
+        let sliderLineView = UIView(frame: CGRect(x: self.layout.lrMargin, y: self.pageTitleView.bounds.height - layout.bottomLineHeight - layout.pageBottomLineHeight - layout.bottomLineBottomMargin, width: 0, height: self.layout.bottomLineHeight))
         sliderLineView.backgroundColor = self.layout.bottomLineColor
         return sliderLineView
     }()
@@ -274,6 +279,7 @@ extension LTPageView {
             
             if index == 0 {
                 button.setTitleColor(layout.titleSelectColor, for: .normal)
+                button.titleLabel?.font = layout.titleSelectFont;
                 createViewController(0)
             }
             
@@ -487,7 +493,11 @@ extension LTPageView {
     
     private func setupButtonStatusAnimation(upButton: UIButton, currentButton: UIButton)  {
         upButton.setTitleColor(layout.titleColor, for: .normal)
+        upButton.titleLabel?.font = layout.titleSelectFont
+
         currentButton.setTitleColor(layout.titleSelectColor, for: .normal)
+        currentButton.titleLabel?.font = layout.titleFont
+
     }
     
     //MARK: 让title的ScrollView滚动到中心点位置
